@@ -1,11 +1,16 @@
+"""
+Class for the Song object, for use in the song recommender.
+
+Created: January 2025 by Oscar Reza B.
+"""
+
 import numpy as np
-import pandas as pd
-import re
 from scipy import stats
-import pickle
 
 class Song():
-    def __init__(self, id: str, title: str, artist: str, album_name: str, album_img: str, bpm: int, camelot: str, lyrics: np.array):
+    def __init__(self, id: int, title: str, artist: str, album_name: str, album_img: str, bpm: int, camelot: str, lyrics: np.array):
+        '''A song object, containing its relevant metadata.
+        '''
         self.id = id
         self.title = title
         self.artist = artist
@@ -16,26 +21,28 @@ class Song():
         self.lyrics = lyrics
 
     def similarity_to(self, other):
-        component_1 = 1 if np.isclose(self.bpm, other.bpm, atol=5) else 0  # 1 if bpm is within 5 beats, 0 otherwise
+        '''Compute this song's similarity with another one.'''
+        bpm_diff = abs(self.bpm - other.bpm)
+        if bpm_diff == 0: component_1 = 1
+        elif bpm_diff < 15: component_1 = 0.75
+        elif bpm_diff < 25: component_1 = 0.5
+        else: component_1 = 0
+        # component_1 = 1 if np.isclose(self.bpm, other.bpm, atol=5) else 0  # 1 if bpm is within 5 beats, 0 otherwise
+        
         component_2 = 1 if self.camelot == other.camelot else 0  # 1 if camelot integer is equal, 0 otherwise
-        component_3 = stats.pearsonr(self.lyrics, other.lyrics)[0]  # compute pearson coefficient between the vectorial representations of each song's lyrics
 
-        return ((component_1*0.3 + component_2*0.3 + component_3*0.3)), component_1, component_2, component_3
+        lyric_pearson = stats.pearsonr(self.lyrics, other.lyrics)[0]  # compute pearson coefficient between the vectorial representations of each song's lyrics
+        if np.isclose(lyric_pearson, 1, atol=0.0001): component_3 = 1
+        elif lyric_pearson > 0.98: component_3 = 0.8
+        elif lyric_pearson > 0.96: component_3 = 0.6
+        elif lyric_pearson > 0.94: component_3 = 0.4
+        elif lyric_pearson > 0.92: component_3 = 0.2
+        elif lyric_pearson > 0.90: component_3 = 0.1
+        else: component_3 = 0
+        # component_3 = stats.pearsonr(self.lyrics, other.lyrics)[0]  
+
+        return [component_1, component_2, component_3]
     
     def to_string(self):
+        '''Get the song in the format {title} by {artist}'''
         return f"'{self.title}' by {self.artist}"
-
-if __name__ == "__main__":
-    full_ds = pd.read_pickle('workable-dataset.pkl')
-
-    test_song = full_ds.iloc[371]
-    test_object = Song(test_song['song_id'], test_song['title'], test_song['artist'], test_song['album'], test_song['album_image'], 
-                      test_song['BPM'], test_song['Camelot'], test_song['lyrics_vec'])
-
-    print(f"Similar songs to {test_object.to_string()}")
-    for song in full_ds.iloc:
-        curr_song = Song(song['song_id'], song['title'], song['artist'], song['album'], song['album_image'], 
-                         song['BPM'], song['Camelot'], song['lyrics_vec'])
-        similarity = test_object.similarity_to(curr_song)
-        if similarity[0] > 0.85 and curr_song.to_string() != test_object.to_string():
-            print(curr_song.to_string(), f"(bpm: {similarity[1]}", f"camelot: {similarity[2]}", f"lyrics: {similarity[3]})")
