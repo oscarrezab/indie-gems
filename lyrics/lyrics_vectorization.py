@@ -59,11 +59,11 @@ class BERTFeatureExtractor():
         # Combine data and song info
         lyrics_df = pd.DataFrame(lyrics_features)
 
-        lyrics_df.to_csv("vectorized-lyrics.csv", index=False)  # Save to csv
+        lyrics_df.to_csv("res/vectorized-lyrics.csv", index=False)  # Save to csv
 
 if __name__ == "__main__":
     # Define data path
-    DATA_PATH = "full-dataset-with-preprocessing.csv"
+    DATA_PATH = "res/full-dataset-with-preprocessing.csv"
 
     # Create feature extractor
     extractor = BERTFeatureExtractor(DATA_PATH)

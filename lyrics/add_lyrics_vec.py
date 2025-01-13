@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 
-lyrics_df = pd.read_csv('vectorized-lyrics.csv')
+lyrics_df = pd.read_csv('res/vectorized-lyrics.csv')
 lyrics_np = lyrics_df.to_numpy()
-gems_df = pd.read_csv('indie-gems.csv')
+gems_df = pd.read_csv('res/indie-gems.csv')
 
 gems_df['lyrics_vec'] = [lyrics_np[i] for i in range(len(gems_df.index))]
 

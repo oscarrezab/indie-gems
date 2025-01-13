@@ -41,13 +41,13 @@ class LyricsPreprocessor:
 
 
 if __name__ == "__main__":
-    all_lyrics = LyricsPreprocessor.get_text_from_csv("full-dataset.csv")
+    all_lyrics = LyricsPreprocessor.get_text_from_csv("res/full-dataset.csv")
     # print(type(all_lyrics[0]))
     preprocessed_lyrics = [LyricsPreprocessor.preprocess_text(lyric) for lyric in all_lyrics]
     # print(preprocessed_lyrics[56])
 
     # Load full dataset and create copy (just to be safe lol)
-    all_data = pd.read_csv("full-dataset.csv")
+    all_data = pd.read_csv("res/full-dataset.csv")
     data_copy = all_data
     original_lyrics = all_data.get('lyrics')
 
@@ -56,4 +56,4 @@ if __name__ == "__main__":
         data_copy = data_copy.replace(original, preprocessed)
 
     # print(data_copy.drop('Unnamed: 0',axis=1))
-    data_copy.drop('Unnamed: 0',axis=1).to_csv("full-dataset-with-preprocessing.csv")  # Remove extra column and save csv
+    data_copy.drop('Unnamed: 0',axis=1).to_csv("res/full-dataset-with-preprocessing.csv")  # Remove extra column and save csv
