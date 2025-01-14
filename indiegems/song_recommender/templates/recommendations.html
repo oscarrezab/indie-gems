@@ -6,7 +6,13 @@
     <title>Recommendations</title>
 </head>
 <body>
-    <h1>Hey, recomendations found!</h1>
-    <p>Found {{ recommendations }} recommendation(s)</p>
+    {% block content %}
+    <h1>Hey, recomendations found for the song {{ recommendations.get_source_song.to_string }}</h1>
+    <p>Found the following recommendation(s)</p>
+    {% for recommendation in recommendations.get_similar_songs %}
+        <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
+    {% endfor %}
+    {% endblock %}
+
 </body>
 </html>
