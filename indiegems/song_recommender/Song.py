@@ -19,6 +19,7 @@ class Song():
         self.bpm = bpm
         self.camelot = camelot
         self.lyrics = lyrics
+        self.similarity_score = 0
 
     def similarity_to(self, other):
         '''Compute this song's similarity with another one.'''
@@ -43,6 +44,9 @@ class Song():
 
         return [component_1, component_2, component_3]
     
+    def set_similarity(self, score):  
+        self.similarity_score = score
+
     def to_string(self):
         '''Get the song in the format {title} by {artist}'''
         return f"'{self.title}' by {self.artist}"
