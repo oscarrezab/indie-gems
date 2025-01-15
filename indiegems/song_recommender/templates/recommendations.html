@@ -15,13 +15,18 @@
         <button type="submit">Find gems!</button>
     </form>
 
-    {% if recommendations %}
-        <h2>Recommendations for the song "{{ recommendations.get_source_song.to_string }}"</h2>
-        <p>Found the following recommendation(s):</p>
-        {% for recommendation in recommendations.get_similar_songs %}
-            <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
-        {% endfor %}
+    {% if form_submitted %}
+        <h2>Recommendations for the song {{ recommendations.get_source_song.to_string }}</h2>
+        {% if recommendations and recommendations.get_similar_songs %}
+            <p>Found the following recommendation(s):</p>
+            {% for recommendation in recommendations.get_similar_songs %}
+                <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
+            {% endfor %}
+        {% else %}
+            <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
+        {% endif %}
     {% endif %}
+
     <a href="../">Go to home page</a>
     {% endblock %}
 </body>

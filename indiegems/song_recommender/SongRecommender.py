@@ -37,8 +37,9 @@ class SongRecommendation():
         for song in self.dataset.iloc:
             curr_song = Song(song['song_id'], song['title'], song['artist'], song['album'], song['album_image'], 
                                 song['BPM'], song['Camelot'], song['lyrics_vec'])
-            curr_sim = self.song.similarity_to(curr_song)
-            similarities_map[curr_song] = curr_sim
+            if curr_song.to_string() != self.song.to_string():
+                curr_sim = self.song.similarity_to(curr_song)
+                similarities_map[curr_song] = curr_sim
 
         # Compute recommendation scores
         for song in similarities_map.keys():
