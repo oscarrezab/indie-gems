@@ -1,12 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
-import pandas as pd
-
-from .Song import Song
 from .SongRecommender import SongRecommendation
 
-# Create your views here.
+def home_page(request):
+    home = "hey, you have reached the home page!"
+    return render(request, 'index.html', {'home_page': home})
+
 def get_recommendations(request):
     recommendations = SongRecommendation(song_id=358)
 

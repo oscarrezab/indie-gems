@@ -12,6 +12,7 @@
     {% for recommendation in recommendations.get_similar_songs %}
         <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
     {% endfor %}
+    <a href="../">Go to home page</a>
     {% endblock %}
 
 </body>
