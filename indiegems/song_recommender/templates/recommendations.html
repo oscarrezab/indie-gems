@@ -10,8 +10,13 @@
     <h1>Find Song Recommendations</h1>
     <form method="POST" action="">
         {% csrf_token %}
-        <label for="song_id">Enter Song ID:</label>
-        <input type="number" id="song_id" name="song_id" required>
+        <label for="song_title">Enter a song you like:</label>
+        <input type="text" id="song_title" name="song_title" list="song_titles" placeholder="Song Title" required>
+        <datalist id = "song_titles">
+            {% for title in all_song_titles %}
+                <option value="{{ title }}"></option>
+            {% endfor %}
+        </datalist>
         <button type="submit">Find gems!</button>
     </form>
 
