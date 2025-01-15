@@ -6,8 +6,14 @@ def home_page(request):
     home = "hey, you have reached the home page!"
     return render(request, 'index.html', {'home_page': home})
 
-def get_recommendations(request):
-    recommendations = SongRecommendation(song_id=358)
+def recommendations_view(request):
+    recommendations = None
+    if request.method == "POST":
+        song_id = request.POST.get('song_id')
+        if song_id:
+            recommendations = get_recommendations(song_id) 
 
-    # Return the recommendations as a response
     return render(request, 'recommendations.html', {'recommendations': recommendations})
+
+def get_recommendations(id):
+    return SongRecommendation(int(id))

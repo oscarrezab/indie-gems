@@ -7,13 +7,22 @@
 </head>
 <body>
     {% block content %}
-    <h1>Hey, recomendations found for the song {{ recommendations.get_source_song.to_string }}</h1>
-    <p>Found the following recommendation(s)</p>
-    {% for recommendation in recommendations.get_similar_songs %}
-        <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
-    {% endfor %}
+    <h1>Find Song Recommendations</h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label for="song_id">Enter Song ID:</label>
+        <input type="number" id="song_id" name="song_id" required>
+        <button type="submit">Find gems!</button>
+    </form>
+
+    {% if recommendations %}
+        <h2>Recommendations for the song "{{ recommendations.get_source_song.to_string }}"</h2>
+        <p>Found the following recommendation(s):</p>
+        {% for recommendation in recommendations.get_similar_songs %}
+            <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
+        {% endfor %}
+    {% endif %}
     <a href="../">Go to home page</a>
     {% endblock %}
-
 </body>
 </html>
