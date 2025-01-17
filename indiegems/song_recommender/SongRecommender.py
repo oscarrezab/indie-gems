@@ -45,7 +45,7 @@ class SongRecommendation():
         for song in similarities_map.keys():
             scores = similarities_map.get(song)
             overall_score = (scores[0] + scores[1] + scores[2]) / 3  # computes the overall score
-            if overall_score > 0.65:
+            if overall_score > 0.75:
                 song.set_similarity(round(overall_score*100, 2))
                 recommendations.append(song)  # add the song object, alongside its overall score
 

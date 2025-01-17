@@ -23,11 +23,8 @@ class Song():
 
     def similarity_to(self, other):
         '''Compute this song's similarity with another one.'''
-        bpm_diff = abs(self.bpm - other.bpm)
-        if bpm_diff == 0: component_1 = 1
-        elif bpm_diff < 15: component_1 = 0.75
-        elif bpm_diff < 25: component_1 = 0.5
-        else: component_1 = 0
+        bpm_diff = abs(self.bpm - other.bpm) / 140  # highest bpm is 204, while lowest is 64, 140 is the highest difference, so we subtract it to get a value between 1 and 0
+        component_1 = 1 - bpm_diff * 2  # multiplied diff times 2 to make effect more pronounced
         # component_1 = 1 if np.isclose(self.bpm, other.bpm, atol=5) else 0  # 1 if bpm is within 5 beats, 0 otherwise
         
         component_2 = 1 if self.camelot == other.camelot else 0  # 1 if camelot integer is equal, 0 otherwise
