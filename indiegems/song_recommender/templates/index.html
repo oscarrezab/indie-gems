@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indie Gems - Find Similar Songs!</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    <title>Indie Gems</title>
 </head>
 <body>
     {% block content %}
     <h1>{{ home_page }}</h1>
-    <a href="recommendations/">Click here to go to the recommendations page</a>
+    <h3>Click <a href="recommendations/"> here</a> to get recommendations for songs that ACTUALLY sound similar.</h3>
+    <h2>How are the recommendations retrieved?</h2>
+    <ul>
+        <li>A total of 545 indie/alt rock songs are stored in a dataset</li>
+        <li>For a given song, three similary components are measured:
+            <ul>
+                <li>BPM difference</li>
+                <li>Key or tonality equality (if both songs are in the same key)</li>
+                <li>Lyric similarity (based on a vector representation)</li>
+            </ul>
+        </li>
+        <li>All three components are given an equal weight, from which a final score is computed</li>
+    </ul>
+    <p>Please, feel free to <a href="https://www.linkedin.com/in/oscarrezab" target="_blank">contact me</a> for any further questions!</p>
     {% endblock %}
 
 </body>

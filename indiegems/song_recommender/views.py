@@ -4,7 +4,7 @@ import pandas as pd
 from .SongRecommender import SongRecommendation
 
 def home_page(request):
-    home = "hey, you have reached the home page!"
+    home = "Welcome to Indie Gems"
     return render(request, 'index.html', {'home_page': home})
 
 def recommendations_view(request):

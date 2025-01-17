@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recommendations</title>
-</head>
-<body>
-    {% block content %}
-    <h1>Find Song Recommendations</h1>
-    <form method="POST" action="">
-        {% csrf_token %}
-        <label for="song_title">Enter a song you like:</label>
-        <input type="text" id="song_title" name="song_title" list="song_titles" placeholder="Song Title" required>
-        <datalist id = "song_titles">
-            {% for title in all_song_titles %}
-                <option value="{{ title }}"></option>
-            {% endfor %}
-        </datalist>
-        <button type="submit">Find gems!</button>
-    </form>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
-    {% if form_submitted %}
-        <h2>Recommendations for the song {{ recommendations.get_source_song.to_string }}</h2>
-        {% if recommendations and recommendations.get_similar_songs %}
-            <p>Found the following recommendation(s):</p>
-            {% for recommendation in recommendations.get_similar_songs %}
-                <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
-            {% endfor %}
-        {% else %}
-            <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
+        <title>Get Song Recommendations - Indie Gems</title>
+    </head>
+    <body>
+        {% block content %}
+        <h1>Find Song Recommendations</h1>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="song_title">Enter a song you like:</label>
+            <input type="text" id="song_title" name="song_title" list="song_titles" placeholder="Song Title" required>
+            <datalist id = "song_titles">
+                {% for title in all_song_titles %}
+                    <option value="{{ title }}"></option>
+                {% endfor %}
+            </datalist>
+            <button type="submit">Find gems!</button>
+        </form>
+        <p>Currently available artists are: ALEXSUCKS, Arctic Monkeys, Fontaines D.C., iDKHOW, Inhaler, The Killers, The Kooks, The Strokes, Surf Curse, The Vaccines</p>
+
+        {% if form_submitted %}
+            <h2>Recommendations for the song {{ recommendations.get_source_song.to_string }}</h2>
+            {% if recommendations and recommendations.get_similar_songs %}
+                <p>Found the following recommendation(s):</p>
+                {% for recommendation in recommendations.get_similar_songs %}
+                    <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
+                {% endfor %}
+            {% else %}
+                <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
+            {% endif %}
         {% endif %}
-    {% endif %}
 
-    <a href="../">Go to home page</a>
-    {% endblock %}
-</body>
+        <a href="../">Go to home page</a>
+        {% endblock %}
+    </body>
 </html>
