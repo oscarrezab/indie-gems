@@ -26,14 +26,26 @@
 
         {% if form_submitted %}
             <h2>Recommendations for the song {{ recommendations.get_source_song.to_string }}</h2>
-            {% if recommendations and recommendations.get_similar_songs %}
-                <p>Found the following recommendation(s):</p>
+            <div class="recommendations-wrapper">
+              {% if recommendations and recommendations.get_similar_songs %}
                 {% for recommendation in recommendations.get_similar_songs %}
-                    <p>{{ recommendation.to_string }} with similarity of {{ recommendation.similarity_score }}%</p>
+                    <div class="recommendation-card">
+                      <div class="image-container">
+                        <img src={{ recommendation.album_img }} alt="">
+                      </div>
+                      <div class="text-container">
+                        <div class="title-and-artist">
+                          <h3>{{ recommendation.title }}</h3>
+                          <p class="artist">{{ recommendation.artist }}</p>
+                        </div>
+                        <p>Similarity: {{ recommendation.similarity_score }}%</p>
+                      </div>
+                    </div>
                 {% endfor %}
             {% else %}
                 <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
             {% endif %}
+            </div>
         {% endif %}
 
         <a href="../">Go to home page</a>

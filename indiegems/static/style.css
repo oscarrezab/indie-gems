@@ -13,4 +13,54 @@ html {
 body {
     display: flex;
     flex-direction: column;
+    gap: 0px;
+}
+
+/* Search form */
+input, button {
+    background-color: rgb(214, 214, 214);
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+button {
+    background-color: black;
+    color: white;
+
+}
+
+.recommendations-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Recommendation card */
+.recommendation-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 90px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    overflow-x: hidden;
+    border: solid gray 1px;
+    border-radius: 3px;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 0;
+}
+
+.artist {
+    color: gray;
+}
+
+.title-and-artist {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
