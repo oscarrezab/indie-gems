@@ -10,7 +10,7 @@ import pandas as pd
 from .Song import Song
 
 class SongRecommendation():
-    def __init__(self, song_id: int, dataset_path: str = '/Users/oscarrezab/GitHub/indie-gems/indiegems/song_recommender/workable-dataset.pkl'):
+    def __init__(self, song_id: int, dataset_path: str = 'song_recommender/workable-dataset.pkl'):
         self.dataset =  pd.read_pickle(dataset_path)
         self.song = self.song_object_from_id(song_id)
         self.similar_songs = self.compute_recommendations()
