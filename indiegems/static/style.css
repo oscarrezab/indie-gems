@@ -44,7 +44,7 @@ button {
     height: 90px;
     box-sizing: border-box;
     padding-left: 10px;
-    overflow-x: hidden;
+    overflow: hidden;
     border: solid gray 1px;
     border-radius: 3px;
 }
@@ -52,15 +52,27 @@ button {
 .text-container {
     display: flex;
     flex-direction: column;
-    line-height: 0;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    overflow: hidden;
 }
 
 .artist {
     color: gray;
 }
 
+
 .title-and-artist {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 700px) {
+    .text-container {
+        font-size: 10px; /* Adjust the font size as needed */
+        overflow-x: hidden;
+    }
 }
