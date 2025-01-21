@@ -25,9 +25,13 @@
         <p>Currently available artists are: ALEXSUCKS, Arctic Monkeys, Fontaines D.C., iDKHOW, Inhaler, The Killers, The Kooks, The Strokes, Surf Curse, The Vaccines</p>
 
         {% if form_submitted %}
+        <div class="recommendations-wrapper">
+          {% if invalid_title %}
+            <script>
+              alert("Please enter a song title that exactly matches an option in the dropdown list of songs or, instead, click on one of the available options.");
+            </script>
+          {% elif recommendations and recommendations.get_similar_songs %}
             <h2>Recommendations for the song {{ recommendations.get_source_song.to_string }}</h2>
-            <div class="recommendations-wrapper">
-              {% if recommendations and recommendations.get_similar_songs %}
                 {% for recommendation in recommendations.get_similar_songs %}
                     <div class="recommendation-card">
                       <div class="image-container">
@@ -42,9 +46,10 @@
                       </div>
                     </div>
                 {% endfor %}
-            {% else %}
-                <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
-            {% endif %}
+              {% else %}
+                  <h2>No recommendations found</h2>
+                  <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
+              {% endif %}
             </div>
         {% endif %}
 

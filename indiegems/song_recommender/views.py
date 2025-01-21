@@ -15,8 +15,12 @@ def recommendations_view(request):
     if request.method == "POST":
         form_submitted = True
         song_title = request.POST.get('song_title')
-        if song_title:
-            recommendations = get_recommendations(song_titles_map[song_title]) 
+        try:
+            if song_title:
+                recommendations = get_recommendations(song_titles_map[song_title]) 
+        except Exception:
+            return render(request, 'recommendations.html', {'invalid_title': "invalid", 'form_submitted': form_submitted,})
+
 
     return render(request, 'recommendations.html', {'recommendations': recommendations, 'form_submitted': form_submitted, 'all_song_titles': song_titles_map})
 
