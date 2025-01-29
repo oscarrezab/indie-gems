@@ -17,6 +17,7 @@ Tools used for lyric vectorization are stored in the `lyrics` directory.
 
 ## Current plans for improvement
 * Improve the comparison of song lyrics. Currently, the vanilla version of DistilBERT is used for producing vector embeddings for the lyrics. The computed Pearson correlations lie mostly around 90-95%, such lack of significant differences makes the computation of similarity scores unreliable. The first ideas are to fine-tune the model with a dataset specific to text comparison, remove stop words ('the', 'is', 'it'...), or simply use a different model that was trained specifically for comparing texts.
+    * UPDATE: The DistilBERT model was switched to "sentence-transformers/all-mpnet-base-v2" from the  [sentence-transformers](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) library, also from HuggingFace. Similarity is now computed as a vector similarity, instead of a Pearson correlation. This gives values between 0 and 1. Still, experiments to fine-tune this or another model, or to create a custom tokenizer should be considered.
 * Update scraping scripts for a straightforward method of increasing the dataset.
 * Refactor code to retrieve data from the SQLite table to avoid dependency on pkl and csv files
 * Add functionality to customize weight given to each similarity score 
