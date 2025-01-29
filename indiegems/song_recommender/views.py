@@ -28,5 +28,5 @@ def get_recommendations(id):
     return SongRecommendation(int(id))
 
 def get_all_song_titles():
-    recommender = SongRecommendation(0)
+    recommender = SongRecommendation(-1)
     return recommender.get_all_songs_and_ids()

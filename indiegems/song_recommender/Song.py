@@ -3,9 +3,9 @@ Class for the Song object, for use in the song recommender.
 
 Created: January 2025 by Oscar Reza B.
 """
-from sklearn.metrics.pairwise import cosine_similarity
 
 import numpy as np
+from numpy.linalg import norm
 
 class Song():
     def __init__(self, id: int, title: str, artist: str, album_name: str, album_img: str, bpm: int, camelot: str, lyrics: np.array):
@@ -28,7 +28,7 @@ class Song():
         # component_1 = 1 if np.isclose(self.bpm, other.bpm, atol=5) else 0  # 1 if bpm is within 5 beats, 0 otherwise
         
         component_2 = 1 if self.camelot == other.camelot else 0  # 1 if camelot integer is equal, 0 otherwise
-        component_3 = cosine_similarity(self.lyrics, other.lyrics)[0][0]
+        component_3 = np.dot(self.lyrics[0],other.lyrics[0])/(norm(self.lyrics[0])*norm(other.lyrics[0]))  # compute cosine similarity
         
         # component_3 = stats.pearsonr(self.lyrics, other.lyrics)[0]  
 
