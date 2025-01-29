@@ -50,6 +50,9 @@ class SongRecommendation():
                 song.set_similarity(round(overall_score*100, 2))
                 recommendations.append(song)  # add the song object, alongside its overall score
 
+        # Sort recommendation list by similarity score, highest to lowest
+        recommendations.sort(key=lambda song: song.similarity_score, reverse=True)
+        
         # Return the recommendations as a response
         return recommendations
     
