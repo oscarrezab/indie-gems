@@ -2,7 +2,7 @@
 Get indie song recommendations, because the ones in our music players are not too good!
 
 ## How does this work?
-The idea is to recommend songs that sound similar, so rhythmic and tonality factors should play an important role in suggesting similar songs. With this in mind, each recommendation is based on similarities between the BPM (beats per minute), the Camelot value (which is related to musical key), and the lyrics of two songs.
+The idea is to recommend songs that sound similar, so rhythmic and tonality factors should play an important role in suggesting similar songs. With this in mind, each recommendation is based on similarities between the BPM (beats per minute), the Camelot value (which is related to musical key), and the lyrics of two songs. Users can select custom weights for each component.
 
 ## About the scraped data
 Tools for scraping the web are stored in the `scraping` directory. 
@@ -20,5 +20,4 @@ Tools used for lyric vectorization are stored in the `lyrics` directory.
     * UPDATE: The DistilBERT model was switched to "sentence-transformers/all-mpnet-base-v2" from the  [sentence-transformers](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) library, also from HuggingFace. Similarity is now computed as a vector similarity, instead of a Pearson correlation. This gives values between 0 and 1. Still, experiments to fine-tune this or another model, or to create a custom tokenizer should be considered.
 * Update scraping scripts for a straightforward method of increasing the dataset.
 * Refactor code to retrieve data from the SQLite table to avoid dependency on pkl and csv files
-* Add functionality to customize weight given to each similarity score 
 * Handle 'fuzzy' search to account for typos or other factors that may make a text input different to the values stored in the dataset.
