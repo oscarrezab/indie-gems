@@ -20,6 +20,70 @@
                     <option value="{{ title }}"></option>
                 {% endfor %}
             </datalist>
+            </br>
+
+            <label>BPM: <span id="value1">0.33</span></label><br>
+            <input type="range" id="bpm_slider" name="bpm_slider" min="0" max="1" step="0.01" value="0.33"><br><br>
+
+            <label>Key: <span id="value2">0.33</span></label><br>
+            <input type="range" id="key_slider" name="key_slider" min="0" max="1" step="0.01" value="0.33"><br><br>
+
+            <label>Lyrics: <span id="value3">0.33</span></label><br>
+            <input type="range" id="lyrics_slider" name="lyrics_slider" min="0" max="1" step="0.01" value="0.33"><br><br>
+
+            <script>
+              const sliders = [
+                document.getElementById("bpm_slider"),
+                document.getElementById("key_slider"),
+                document.getElementById("lyrics_slider"),
+              ];
+
+              const values = [
+                document.getElementById("value1"),
+                document.getElementById("value2"),
+                document.getElementById("value3"),
+              ];
+
+              sliders.forEach((slider, i) => {
+                slider.value = 0.33;
+                values[i].textContent = "0.33";
+              });
+
+              function updateValues() {
+                sliders.forEach((slider, i) => {
+                  values[i].textContent = parseFloat(slider.value).toFixed(2);
+                });
+              }
+
+              function onSliderInput(changedIndex) {
+                const total = 1;
+                const changedValue = parseFloat(sliders[changedIndex].value);
+
+                // Get the other two indices
+                const otherIndices = [0, 1, 2].filter(i => i !== changedIndex);
+                const sumOthers = sliders[otherIndices[0]].valueAsNumber + sliders[otherIndices[1]].valueAsNumber;
+                const diff = total - changedValue;
+
+                if (sumOthers === 0) {
+                  // Distribute equally if others are 0 to avoid divide by zero
+                  sliders[otherIndices[0]].value = (diff / 2).toFixed(2);
+                  sliders[otherIndices[1]].value = (diff / 2).toFixed(2);
+                } else {
+                  // Distribute proportionally
+                  const ratio0 = sliders[otherIndices[0]].valueAsNumber / sumOthers;
+                  const ratio1 = sliders[otherIndices[1]].valueAsNumber / sumOthers;
+                  sliders[otherIndices[0]].value = (diff * ratio0).toFixed(2);
+                  sliders[otherIndices[1]].value = (diff * ratio1).toFixed(2);
+                }
+
+                updateValues();
+              }
+
+              sliders.forEach((slider, index) => {
+                slider.addEventListener("input", () => onSliderInput(index));
+              });
+            </script>
+
             <button type="submit">Find gems!</button>
         </form>
         <p>Currently available artists are: ALEXSUCKS, Arctic Monkeys, Fontaines D.C., iDKHOW, Inhaler, The Killers, The Kooks, The Strokes, Surf Curse, The Vaccines</p>

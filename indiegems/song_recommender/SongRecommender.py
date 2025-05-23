@@ -10,11 +10,11 @@ import pandas as pd
 from .Song import Song
 
 class SongRecommendation():
-    def __init__(self, song_id: int, dataset_path: str = 'song_recommender/newest_dataset.pkl'):
+    def __init__(self, song_id: int, comp1_weight: float = 1/3, comp2_weight: float = 1/3, comp3_weight: float = 1/3, dataset_path: str = 'song_recommender/newest_dataset.pkl'):
         self.dataset =  pd.read_pickle(dataset_path)
         if song_id != -1:
             self.song = self.song_object_from_id(song_id)
-            self.similar_songs = self.compute_recommendations()
+            self.similar_songs = self.compute_recommendations(comp1_weight, comp2_weight, comp3_weight)
 
     def get_source_song(self):
         return self.song
@@ -29,7 +29,12 @@ class SongRecommendation():
         
         return song_object
 
-    def compute_recommendations(self):
+    def compute_recommendations(self, comp1_weight, comp2_weight, comp3_weight):
+        '''
+        Computes the similarity between songs and gives a list of the most similar ones.
+        Inputs:
+            - comp1_weight, comp2_weight, and comp3_weight: the weight or importance given to each of the three components
+        '''
         # Initialize similarity map and recommendations list
         similarities_map = {}  # maps {song object : list of similarity scores}
         recommendations = []
@@ -45,7 +50,11 @@ class SongRecommendation():
         # Compute recommendation scores
         for song in similarities_map.keys():
             scores = similarities_map.get(song)
-            overall_score = (scores[0] + scores[1] + scores[2]) / 3  # computes the overall score
+            overall_score = (
+                (scores[0] * comp1_weight)
+                + (scores[1] * comp2_weight)  
+                + (scores[2] * comp3_weight)
+                ) 
             if overall_score > 0.80:
                 song.set_similarity(round(overall_score*100, 2))
                 recommendations.append(song)  # add the song object, alongside its overall score
@@ -64,7 +73,8 @@ class SongRecommendation():
         return song_map
     
 
-# if __name__ == "__main__":
-#     recommender = SongRecommendation(0)
-#     for title in recommender.get_all_songs_and_ids().values():
-#         print(title)
+if __name__ == "__main__":
+    recommender = SongRecommendation(0, 3/6, 1/6, 2/6)
+    print(f"Song title: {recommender.song.title}\n")
+    for similar_song in recommender.similar_songs:
+        print(similar_song.title)
