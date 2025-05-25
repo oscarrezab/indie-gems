@@ -10,12 +10,12 @@
     </head>
     <body>
         {% block content %}
-        <h1>Find Song Recommendations</h1>
+        <h2>Find Song Recommendations</h2>
         <form method="POST" action="">
             {% csrf_token %}
-            <div class="song-input">
-              <label for="song_title">Enter a song you like:</label>
-              <input type="text" id="song_title" name="song_title" list="song_titles" placeholder="Song Title" required value="{{ request.POST.song_title }}">
+            <div class="song_input">
+              <label for="song_title">Enter a song you like: </label>
+              <input type="text" id="song_title" class="song_title" name="song_title" list="song_titles" placeholder="Song Title" required value="{{ request.POST.song_title }}">
               <datalist id = "song_titles">
                   {% for title in all_song_titles %}
                       <option value="{{ title }}"></option>
@@ -27,13 +27,13 @@
             <span>Select custom weights for similarity:</span>
             <div class="weight-sliders">
               <label>BPM: <span id="value1">0.33</span></label><br>
-              <input type="range" id="bpm_slider" name="bpm_slider" min="0" max="1" step="0.01" value="{{ request.POST.bpm_slider|default:"0.33" }}">
+              <input type="range" class="bpm_slider" id="bpm_slider" name="bpm_slider" min="0" max="1" step="0.01" value="{{ request.POST.bpm_slider|default:"0.33" }}">
   
               <label>Key: <span id="value2">0.33</span></label><br>
-              <input type="range" id="key_slider" name="key_slider" min="0" max="1" step="0.01" value="{{ request.POST.key_slider|default:"0.33" }}">
+              <input type="range" class="bpm_slider" id="key_slider" name="key_slider" min="0" max="1" step="0.01" value="{{ request.POST.key_slider|default:"0.33" }}">
   
               <label>Lyrics: <span id="value3">0.33</span></label><br>
-              <input type="range" id="lyrics_slider" name="lyrics_slider" min="0" max="1" step="0.01" value="{{ request.POST.lyrics_slider|default:"0.33" }}">
+              <input type="range" class="bpm_slider" id="lyrics_slider" name="lyrics_slider" min="0" max="1" step="0.01" value="{{ request.POST.lyrics_slider|default:"0.33" }}">
   
               <script src="{% static '/javascript/slider.js'%}"></script>
             </div>
