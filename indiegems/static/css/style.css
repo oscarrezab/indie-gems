@@ -2,39 +2,152 @@
     --background: rgb(21, 0, 6);
     --yellow: rgb(255, 255, 0);
     --pink: rgb(255, 0, 123);
+    --top_gradient: linear-gradient(to bottom, var(--background) 30%, rgb(68, 0, 31));
+    --bottom_gradient: linear-gradient(to bottom, rgb(68, 0, 31) 30%, rgb(148, 0, 66) 120%);
+
+
+    --button_radius: 16px;
 }
 
 html {
     min-height: 100%;
-    margin: 0 2% 0 2%;
-    padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: linear-gradient(to bottom, var(--background) 40%, var(--pink) 280%);
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
 }
 
 a {
-    text-decoration: none;
     color: var(--yellow);
-    padding: 12px 0px;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-h1 {
-    font-size: 5rem;
+section {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
 }
 
-/* HomePage Logo */
-.logo-wrapper img {
-    width: 200px;
-    size: 100%;
-    object-fit: fill;
+button {
+    background-color: var(--yellow);
+    color: black;
+    font-weight: bold;
+    border: 0px;
+    border-radius: var(--button_radius);
+    cursor: pointer;
+}
 
+.normal_text {
+    line-height: 1.5rem;
+    padding: 0 2rem;
+    margin: 0px;
+    font-weight: normal;
+}
+
+.secondary_button {
+    font-size: 1rem;
+    padding: 12px 48px;
+    margin-bottom: 16px;
+}
+
+/* Index section */
+.hero {
+    background: var(--top_gradient);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.recommendations_page {
+    min-height: 100vh;
+    background: var(--top_gradient);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.subheading {
+    padding: 1rem 2rem;
+    margin: 0;
+}
+
+.index_logo {
+    font-size: 6rem;
+    line-height: 1rem;
+    padding-top: 10vh;
+}
+
+.heading {
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-align: center;
+    width: 420px;
+    margin: 12px;
+}
+
+.scroll_message {
+    font-size: 1.25rem;
+    text-align: center;
+    padding-top: 25vh;
+    opacity: 50%;
+}
+
+/* Description section */
+.description {
+    background: var(--bottom_gradient);
+}
+
+.description_action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.secondary_logo {
+    margin: 0px;
+    text-align: center;
+    padding-top: 3rem;
+    font-size: 3rem;
+    color: white;
+}
+
+.description_button {
+    margin: 12px;
+    padding: 8px 48px;
+}
+
+.components_wrapper {
+    display: flex;
+    padding: 0 2rem;
+    justify-content: center;
+}
+
+h2 {
+    color: var(--yellow);
+}
+
+.component_info {
+    padding: 0.75rem;
+    width: 25vw;
+}
+
+.list_text {
+    line-height: 1.5rem;
+    padding-bottom: .5rem;
+    padding-inline-start: 0px;
 }
 
 /* Search form */
@@ -43,6 +156,7 @@ form {
     align-items: center;
     flex-direction: column;
     gap: 16px;
+    padding: 0 10vh;
 }
 
 .weight-sliders {
@@ -56,7 +170,7 @@ form {
     outline: none;
     height: 1vmin;
     border-radius: 0.5vmin;
-    background: linear-gradient(to right, var(--background), var(--yellow));
+    background: linear-gradient(to right, rgb(153, 153, 0), var(--yellow));
 }
 
 .song_input {
@@ -67,21 +181,16 @@ form {
 
 .song_title {
     padding: 8px;
-    width: 15ch;
-    background-color: var(--yellow);
-    border-radius: 8px;
+    width: 30ch;
+    background-color: white;
+    border-radius: var(--button_radius);
     border: 0px;
 }
 
-button {
-    background-color: var(--pink);
-    color: white;
-    font-weight: bold;
-    font-size: 1.2rem;
-    border: 0px;
-    border-radius: 8px;
-    padding: 8px 24px;
-
+.index_button {
+    font-size: 1.5rem;
+    padding: 16px 128px;
+    margin: 12px;
 }
 
 /* Recommendation card */
@@ -89,46 +198,80 @@ button {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding-bottom: 2rem;
 }
 
-.recommendation-card {
+.recommendation_card {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
     height: 90px;
+    width: 90vw;
     box-sizing: border-box;
-    padding-left: 10px;
+    padding: 0 12px;
     overflow: hidden;
     border: solid gray 1px;
-    border-radius: 8px;
+    border-radius: var(--button_radius);
     background-color: var(--background);
 }
 
 .text-container {
     display: flex;
     flex-direction: column;
-    line-height: 1.2;
+    line-height: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
     overflow: hidden;
+    font-size: 1.25rem;
 }
 
 .artist {
     color: gray;
+    padding: 0;
+    margin: 0;
 }
 
 
 .title-and-artist {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0.75rem;
+}
+
+.image_container > img {
+    border-radius: var(--button_radius);
 }
 
 /* Media query for smaller screens */
-@media (max-width: 720px) {
-    h1 {
+@media (max-width: 720px) or (max-height: 600px) {
+    .index_logo {
+        padding-top: 5vh;
         font-size: 3rem;
     }
+
+    .scroll_message {
+        padding-top: 2vh;
+    }
+
+    .heading {
+        font-size: 1rem;
+        width: 90%;
+    }
+
+    .index_button {
+        padding: 16px 64px;
+    }
+
+    /* Component descriptions */
+    .components_wrapper {
+        flex-direction: column;
+    }
+
+    .component_info {
+        width: auto;
+    }
+
+    /* Recommendations Page */
     .text-container {
         font-size: 0.75rem; /* Adjust the font size as needed */
         overflow-x: hidden;
@@ -140,4 +283,6 @@ button {
         align-items: center;
         gap: 8px;
     }
+    
+
 }

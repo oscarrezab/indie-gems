@@ -10,68 +10,69 @@
     </head>
     <body>
         {% block content %}
-        <h2>Find Song Recommendations</h2>
-        <form method="POST" action="">
-            {% csrf_token %}
-            <div class="song_input">
-              <label for="song_title">Enter a song you like: </label>
-              <input type="text" id="song_title" class="song_title" name="song_title" list="song_titles" placeholder="Song Title" required value="{{ request.POST.song_title }}">
-              <datalist id = "song_titles">
-                  {% for title in all_song_titles %}
-                      <option value="{{ title }}"></option>
-                  {% endfor %}
-              </datalist>
-            </div>
-            
-            
-            <span>Select custom weights for similarity:</span>
-            <div class="weight-sliders">
-              <label>BPM: <span id="value1">0.33</span></label><br>
-              <input type="range" class="bpm_slider" id="bpm_slider" name="bpm_slider" min="0" max="1" step="0.01" value="{{ request.POST.bpm_slider|default:"0.33" }}">
+        <div class="recommendations_page">
+          <a href="../"><h1 class="secondary_logo">indiegems</h1></a>
+          <h3 class="heading">Get song recommendations</h3>
+          <form method="POST" action="">
+              {% csrf_token %}
+              <div class="song_input">
+                <label for="song_title">Enter a song you like: </label>
+                <input type="text" id="song_title" class="song_title" name="song_title" list="song_titles" placeholder="Song Title" required value="{{ request.POST.song_title }}">
+                <datalist id = "song_titles">
+                    {% for title in all_song_titles %}
+                        <option value="{{ title }}"></option>
+                    {% endfor %}
+                </datalist>
+              </div>
+              
+              
+              <h3 class="normal_text">Customize your search <a href="../">ⓘ</a></h3>
+              <div class="weight-sliders">
+                <label>BPM: <span id="value1">0.33</span></label><br>
+                <input type="range" class="bpm_slider" id="bpm_slider" name="bpm_slider" min="0" max="1" step="0.01" value="{{ request.POST.bpm_slider|default:"0.33" }}">
+    
+                <label>Key: <span id="value2">0.33</span></label><br>
+                <input type="range" class="bpm_slider" id="key_slider" name="key_slider" min="0" max="1" step="0.01" value="{{ request.POST.key_slider|default:"0.33" }}">
+    
+                <label>Lyrics: <span id="value3">0.33</span></label><br>
+                <input type="range" class="bpm_slider" id="lyrics_slider" name="lyrics_slider" min="0" max="1" step="0.01" value="{{ request.POST.lyrics_slider|default:"0.33" }}">
+    
+                <script src="{% static '/javascript/slider.js'%}"></script>
+              </div>
   
-              <label>Key: <span id="value2">0.33</span></label><br>
-              <input type="range" class="bpm_slider" id="key_slider" name="key_slider" min="0" max="1" step="0.01" value="{{ request.POST.key_slider|default:"0.33" }}">
+              <button type="submit" class="secondary_button">Find songs</button>
+          </form>
+          {% comment %} <p>Currently available artists are: ALEXSUCKS, Arctic Monkeys, Fontaines D.C., iDKHOW, Inhaler, The Killers, The Kooks, The Strokes, Surf Curse, The Vaccines</p> {% endcomment %}
   
-              <label>Lyrics: <span id="value3">0.33</span></label><br>
-              <input type="range" class="bpm_slider" id="lyrics_slider" name="lyrics_slider" min="0" max="1" step="0.01" value="{{ request.POST.lyrics_slider|default:"0.33" }}">
-  
-              <script src="{% static '/javascript/slider.js'%}"></script>
-            </div>
-
-            <button type="submit">Find gems!</button>
-        </form>
-        <p>Currently available artists are: ALEXSUCKS, Arctic Monkeys, Fontaines D.C., iDKHOW, Inhaler, The Killers, The Kooks, The Strokes, Surf Curse, The Vaccines</p>
-
-        {% if form_submitted %}
-        <div class="recommendations-wrapper">
-          {% if invalid_title %}
-            <script>
-              alert("Please enter a song title that exactly matches an option in the dropdown list of songs or, instead, click on one of the available options.");
-            </script>
-          {% elif recommendations and recommendations.get_similar_songs %}
-            <h2>Recommendations for the song {{ recommendations.get_source_song.to_string }}</h2>
-                {% for recommendation in recommendations.get_similar_songs %}
-                    <div class="recommendation-card">
-                      <div class="image-container">
-                        <img src={{ recommendation.album_img }} alt="">
-                      </div>
-                      <div class="text-container">
-                        <div class="title-and-artist">
-                          <h3>{{ recommendation.title }}</h3>
-                          <p class="artist">{{ recommendation.artist }}</p>
+          {% if form_submitted %}
+          <div class="recommendations-wrapper">
+            {% if invalid_title %}
+              <script>
+                alert("Please enter a song title that exactly matches an option in the dropdown list of songs or, instead, click on one of the available options.");
+              </script>
+            {% elif recommendations and recommendations.get_similar_songs %}
+              {% comment %} <h2>Recommendations for the song {{ recommendations.get_source_song.to_string }}</h2> {% endcomment %}
+                  {% for recommendation in recommendations.get_similar_songs %}
+                      <div class="recommendation_card">
+                        <div class="image_container">
+                          <img src={{ recommendation.album_img }} alt="">
                         </div>
-                        <p>Similarity: {{ recommendation.similarity_score }}%</p>
+                        <div class="text-container">
+                          <div class="title-and-artist">
+                            <p class="card_text">{{ recommendation.title }}</p>
+                            <p class="artist">{{ recommendation.artist }}</p>
+                          </div>
+                          <p>Similarity: {{ recommendation.similarity_score }}%</p>
+                        </div>
                       </div>
-                    </div>
-                {% endfor %}
-              {% else %}
-                  <h2>No recommendations found</h2>
-                  <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
-              {% endif %}
-            </div>
-        {% endif %}
-
-        <a href="../">Go to home page</a>
+                  {% endfor %}
+                {% else %}
+                    <h2>No recommendations found</h2>
+                    <p>Could not find any similar songs. Check back for when we update the dataset, or try another song!</p>
+                {% endif %}
+              </div>
+          {% endif %}
+        </div>
         {% endblock %}
     </body>
 </html>

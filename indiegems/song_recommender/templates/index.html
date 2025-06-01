@@ -10,26 +10,60 @@
 </head>
 <body>
     {% block content %}
-    <h1>{{ home_page }}</h1>
-    <div class="logo-wrapper">
-        <h1>indiegems</h1>
-    </div>
+    {% comment %} <h1>{{ home_page }}</h1> {% endcomment %}
+    <main>
+        <section class="hero">
+                <h1 class="index_logo">indiegems</h1>
+    
+                <h3 class="heading">Get song recommendations that really sound similar.</h3>
+        
+                <a href="recommendations/"><button class="index_button">Find Songs</button></a>
+        
+                <p class="scroll_message">Scroll down to see how it works</p>
+        </section>
+    
+        <section class="description">
+            <div class="description_action">
+                <h1 class="secondary_logo">indiegems</h1>
+                <a href="recommendations/"><button class="description_button">Find Songs</button></a>
+            </div>
+            <h3 class="subheading">How are the recommendations retrieved?</h3>
+        
+            <p class="normal_text">There is a dataset of 545 indie/alt rock songs.</p>
+        
+            <p class="normal_text">For a given input song, three similarity components are measured with respect to the other songs in the dataset:</p>
+            
+            <div class="components_wrapper">
+                <div class="component_info">
+                    <h2>BPM</h2>
+                    
+                    <p class="list_text">Stands for Beats Per Minute.</p>
+                    <p class="list_text">It tells you how fast or how slow a song goes. </p>
+                    <p class="list_text">Similar songs will have a very similar or identical BPM.</p>
+                    
+                </div>
+                        <div class="component_info">
+                    <h2>Musical key</h2>
+                    
+                    <p class="list_text">This is the ‘tone’ of the song.</p>
+                    <p class="list_text">Western songs are generally in one of 24 of these ‘tones’</p>
+                    <p class="list_text">It gives a good idea of what notes and chords are in a piece. </p>
+                    
+                </div>
+                        <div class="component_info">
+                    <h2>Lyrics</h2>
+                    
+                    <p class="list_text">Comparing the lyrics between  songs involves techniques in Natural Language Processing</p>
+                    <p class="list_text">Check out the <a href="https://github.com/oscarrezab/indie-gems" target="_blank">project repository</a> to learn more!</p>
+                    
+                </div>
+            </div>
 
-    <h3>Click <a href="recommendations/"> here</a> to get recommendations for songs that ACTUALLY sound similar.</h3>
-    <h2>How are the recommendations retrieved?</h2>
-    <ul>
-        <li>A total of 545 indie/alt rock songs are stored in a dataset</li>
-        <li>For a given song, three similary components are measured:
-            <ul>
-                <li>BPM difference</li>
-                <li>Key or tonality equality (if both songs are in the same key)</li>
-                <li>Lyric similarity (based on a vector representation)</li>
-            </ul>
-        </li>
-        <li>You can customize your search by changing the weight given to each component</li>
-    </ul>
-    <p>Please, feel free to <a href="https://www.linkedin.com/in/oscarrezab" target="_blank">contact me</a> for any further questions!</p>
-    <p>You can also have a look at the <a href="https://github.com/oscarrezab/indie-gems" target="_blank">project repo</a> to learn more!</p>
+            <p class="normal_text">You can customize your search by changing the weight given to each component.</p>
+            <p class="normal_text">Please, feel free to <a href="https://www.linkedin.com/in/oscarrezab" target="_blank">contact me</a> for any further questions :)</p>
+        </section>
+    </main>
+
     {% endblock %}
 
 </body>
