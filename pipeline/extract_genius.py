@@ -3,8 +3,9 @@ Set of functions to extract lyrics and song metadata using `lyricsgenius` to acc
 Genius API.
 
 Pre-requisites: 
-- A developer account for the GEnius API. In this code, the authentication variable is
+- A developer account for the Genius API. In this code, the authentication variable is
 GENIUS_KEY.
+- A CSV file with the headers [title,artist,album,album_cover,lyrics]
 
 Docs for `lyricsgenius` library: https://lyricsgenius.readthedocs.io/en/master/index.html
 
@@ -14,8 +15,10 @@ Created: October 2025 by Oscar Reza B.
 from lyricsgenius import Genius
 from lyricsgenius.types import Song
 import pandas as pd
+import rich
+from requests.exceptions import Timeout
 
-from constants import GENIUS_KEY
+from constants import GENIUS_KEY, ARTISTS_OF_INTEREST
 
 def get_songs_from_artist(genius: Genius, artist_name: str) -> list[Song]:
     '''
@@ -26,7 +29,11 @@ def get_songs_from_artist(genius: Genius, artist_name: str) -> list[Song]:
     :return: list of artist songs
     :rtype: list[Song]
     '''
-    artist = genius.search_artist(artist_name=artist_name, max_songs=2)
+    try:
+        artist = genius.search_artist(artist_name=artist_name)
+    except Timeout:
+        print("Timeout error, retrying...")
+        return get_songs_from_artist(genius, artist_name)
     assert artist is not None
 
     return artist.songs
@@ -64,12 +71,12 @@ def songs_to_csv(songs: list[Song], output_csv: str) -> None:
 
 if __name__ == "__main__":
     # Test with ALEXSUCKS and Surf Curse
-    artists: list[str] = ["ALEXSUCKS", "Surf Curse"]
+    artists: list[str] = ["The Vaccines"]
     # Initialize Genius API using access token
-    genius = Genius(GENIUS_KEY)
+    genius = Genius(GENIUS_KEY, timeout=20)
 
     for artist in artists:
         # Get the list of songs from a given artist
         songs = get_songs_from_artist(genius, artist)
         # Load all artist's songs into a CSV
-        songs_to_csv(songs, "res/alexsucks_and_surf_curse_genius_test_oct_30.csv")
+        songs_to_csv(songs, "res/new_pipeline/all_songs_test_oct_31.csv")
